@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motorola PTT Radio Interface</title>
+    <script src="https://sdk.twilio.com/js/AgoraWebSDK-3.3.3.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #interface { text-align: center; margin-top: 50px; }
+        button { padding: 15px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div id="interface">
+        <h1>Motorola PTT Radio Interface</h1>
+        <button id="pushToTalk">Push to Talk</button>
+    </div>
+    <script>
+        let client = AgoraRTC.createClient({ mode: "live", codec: "h264" });
+        let channelName = "motorola_radio_channel";
+
+        client.init("YOUR_APP_ID", function () {
+            console.log("AgoraRTC client initialized");
+            client.join("YOUR_TEMP_TOKEN", channelName, null, function (uid) {
+                console.log("User " + uid + " joined channel: " + channelName);
+            });
+        });
+
+        document.getElementById('pushToTalk').onclick = function() {
+            client.publish(); // logic to handle the push to talk
+        };
+    </script>
+</body>
+</html>
